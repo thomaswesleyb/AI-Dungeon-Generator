@@ -8,20 +8,17 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v4
       with:
-        submodules: true    # Ensure submodules are checked out
-        fetch-depth: 0      # Clone the entire repository
-        path: ai-dungeon-gen # Specify the subfolder path
+        submodules: true
+        fetch-depth: 0
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
@@ -30,10 +27,10 @@ jobs:
         cache: 'npm'
 
     - run: npm ci
-      working-directory: ./ai-dungeon-gen  # Specify the correct working directory
+      working-directory: ./  # Change to root directory if package-lock.json is there
     - run: npm run lint
-      working-directory: ./ai-dungeon-gen  # Specify the correct working directory
+      working-directory: ./ai-dungeon-gen
     - run: npm run build --if-present
-      working-directory: ./ai-dungeon-gen  # Specify the correct working directory
+      working-directory: ./ai-dungeon-gen
     - run: npm test
-      working-directory: ./ai-dungeon-gen  # Specify the correct working directory
+      working-directory: ./ai-dungeon-gen
