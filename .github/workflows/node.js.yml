@@ -1,6 +1,3 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Node.js CI
 
 on:
@@ -25,11 +22,13 @@ jobs:
         submodules: true    # Ensure submodules are checked out
         fetch-depth: 0      # Clone the entire repository
         path: ai-dungeon-gen # Specify the subfolder path
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+
     - run: npm ci
       working-directory: ./ai-dungeon-gen  # Specify the correct working directory
     - run: npm run lint
